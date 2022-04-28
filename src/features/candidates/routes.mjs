@@ -5,5 +5,5 @@ import * as controller from './controller.mjs'
  * @param {Express} app
  */
 export default (app) => {
-    app.route('candidates').get(controller.getAllCandidates)
+    app.route('/candidates').get(controller.getAllCandidates)
 }

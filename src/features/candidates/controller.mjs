@@ -15,7 +15,7 @@ export const getAllCandidates = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM candidate')
         pool.end()
-        res.status(200).json(result.fields)
+        res.status(200).json(result.rows)
     } catch (errors) {
         res.status(400).send(errors)
     }

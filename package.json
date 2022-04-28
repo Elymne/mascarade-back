@@ -1,0 +1,23 @@
+{
+  "name": "mascarade-back",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-modules src/index.mjs",
+    "dev": "nodemon --experimental-modules src/index.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "express-healthcheck": "^0.1.0",
+    "module": "^1.2.5",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

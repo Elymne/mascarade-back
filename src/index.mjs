@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
-import routing from './core/routing.mjs'
+import routing from './core/router/routing.mjs'
+import logger from './core/log/logger.mjs'
 
 // Set dotenv.
 dotenv.config()
@@ -15,4 +16,6 @@ const app = express()
 routing(app)
 
 // Laucnh server.
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
+app.listen(port, () => {
+    logger.toConsole.info(`Server is now listening on port ${port}!`)
+})

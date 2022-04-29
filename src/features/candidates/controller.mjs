@@ -1,6 +1,7 @@
 import { request } from 'express'
 import { response } from 'express'
-import { PgQuery, execQuery } from '../../core/pgconnect.mjs'
+import { PgQuery, execQuery } from '../../core/db/pgconnect.mjs'
+import logger from '../../core/log/logger.mjs'
 
 /**
  * Callback function.
@@ -15,6 +16,8 @@ export const getAllCandidates = async (req, res) => {
         res.status(200).json(result.rows)
     } catch (errors) {
         res.status(400).send(errors)
+        logger.toConsole.error(errors)
+        logger.toFile.error(errors)
     }
 }
 
@@ -29,11 +32,15 @@ export const getOneCandidate = async (req, res) => {
     try {
         const result = await execQuery(query)
         if (!result.rows.length) {
+            logger.toConsole.info(`A candidate with id [${req.params.id}] was queried but does not exists`)
+            logger.toFile.info(`A candidate with id [${req.params.id}] was queried but does not exists`)
             res.status(404).send('Candidate not found with this id.')
             return
         }
         res.status(200).json(result.rows[0])
     } catch (errors) {
+        logger.toConsole.error(errors)
+        logger.toFile.error(errors)
         res.status(400).send(errors.stack)
     }
 }

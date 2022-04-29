@@ -1,6 +1,6 @@
 import { request } from 'express'
 import { response } from 'express'
-import { PgQuery, execQuery } from '../../core/pgconnect.mjs'
+import { PgQuery, execQuery } from '../../core/db/pgconnect.mjs'
 
 /**
  * Callback function.

@@ -1,4 +1,4 @@
-import candidateRoutes from '../features/candidates/routes.mjs'
+import candidateRoutes from '../../features/candidates/routes.mjs'
 import healthcheck from './healthcheck.mjs'
 
 /**

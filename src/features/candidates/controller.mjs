@@ -1,8 +1,6 @@
 import { request } from 'express'
 import { response } from 'express'
-import pkg from 'pg'
-
-const { Pool, Client } = pkg
+import { PgQuery, execQuery } from '../../core/pgconnect.mjs'
 
 /**
  * Callback function.
@@ -11,12 +9,31 @@ const { Pool, Client } = pkg
  * @param {response} res
  */
 export const getAllCandidates = async (req, res) => {
-    const pool = new Pool()
+    const query = PgQuery('Get all candidates', 'SELECT * FROM candidate', [])
     try {
-        const result = await pool.query('SELECT * FROM candidate')
-        pool.end()
+        const result = await execQuery(query)
         res.status(200).json(result.rows)
     } catch (errors) {
         res.status(400).send(errors)
+    }
+}
+
+/**
+ * Callback function.
+ * Get one specific candidate from DB.
+ * @param {request} req
+ * @param {response} res
+ */
+export const getOneCandidate = async (req, res) => {
+    const query = PgQuery('Get all candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [req.params.id])
+    try {
+        const result = await execQuery(query)
+        if (!result.rows.length) {
+            res.status(404).send('Candidate not found with this id.')
+            return
+        }
+        res.status(200).json(result.rows[0])
+    } catch (errors) {
+        res.status(400).send(errors.stack)
     }
 }

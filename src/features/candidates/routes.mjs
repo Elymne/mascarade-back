@@ -6,4 +6,5 @@ import * as controller from './controller.mjs'
  */
 export default (app) => {
     app.route('/candidates').get(controller.getAllCandidates)
+    app.route('/candidates/:id').get(controller.getOneCandidate)
 }

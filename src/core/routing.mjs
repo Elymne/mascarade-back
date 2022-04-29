@@ -7,7 +7,7 @@ import healthcheck from './healthcheck.mjs'
  */
 export default (app) => {
     // Basic route.
-    app.get('/', (req, res) => res.send('Hello World, from express'))
+    app.get('/', async (req, res) => res.send('Hello World, from express'))
 
     // Candidate routing.
     candidateRoutes(app)

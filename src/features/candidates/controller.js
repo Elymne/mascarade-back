@@ -1,7 +1,6 @@
-import { request } from 'express'
-import { response } from 'express'
 import { PgQuery, execQuery } from '../../core/db/pgconnect.js'
 import { logger } from '../../core/log/logger.js'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * Callback function.
@@ -19,6 +18,17 @@ export const getAllCandidates = async (req, res) => {
         logger.toConsole.error(errors)
         logger.toFile.error(errors)
     }
+}
+
+/**
+ * Callback function.
+ * Get all data from candidates table from DB.
+ * Ordering candidate by score (votes).
+ * @param {request} req
+ * @param {response} res
+ */
+export const getAllCandidatesOrdered = async (req, res) => {
+    res.status(501).send('Not implemented yet')
 }
 
 /**
@@ -47,10 +57,28 @@ export const getOneCandidate = async (req, res) => {
 
 /**
  * Callback function.
- * Add one candidate from DB.
+ * Add candidate from DB.
  * @param {request} req
  * @param {response} res
  */
-export const addOneCandidate = async (req, res) => {
-    const query = PgQuery('')
+export const addCandidate = async (req, res) => {
+    const query = PgQuery('INSERT INTO candidate VALUES ($1,$2,$3)', [uuidv4(), req.body.firstname, req.body.surname])
+    try {
+        const result = await execQuery(query)
+        res.status(201).json(result)
+    } catch (error) {
+        logger.toConsole.error(errors)
+        logger.toFile.error(errors)
+        res.status(500).send(errors.stack)
+    }
+}
+
+/**
+ * Callback function.
+ * Update candidate from DB.
+ * @param {request} req
+ * @param {response} res
+ */
+export const updateCandidate = async (req, res) => {
+    res.status(501).send('Not implemented yet')
 }

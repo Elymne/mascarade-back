@@ -7,7 +7,7 @@ import { logger } from './core/log/logger.js'
 const app = express()
 
 // Set cors.
-app.use(cors)
+app.use(cors())
 
 // Set router.
 app.use('/api/v1', router)

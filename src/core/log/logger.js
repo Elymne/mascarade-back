@@ -21,7 +21,7 @@ const formatCli = winston.format.combine(
 /**
  * Logger object.
  */
-const logger = {
+export const logger = {
     toFile: winston.createLogger({
         transports: [
             new winston.transports.File({
@@ -37,5 +37,3 @@ const logger = {
         level: 'debug',
     }),
 }
-
-export default logger

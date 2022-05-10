@@ -1,7 +1,7 @@
 import { request } from 'express'
 import { response } from 'express'
-import { PgQuery, execQuery } from '../../core/db/pgconnect.mjs'
-import logger from '../../core/log/logger.mjs'
+import { PgQuery, execQuery } from '../../core/db/pgconnect.js'
+import { logger } from '../../core/log/logger.js'
 
 /**
  * Callback function.
@@ -15,7 +15,7 @@ export const getAllCandidates = async (req, res) => {
         const result = await execQuery(query)
         res.status(200).json(result.rows)
     } catch (errors) {
-        res.status(400).send(errors)
+        res.status(500).send(errors)
         logger.toConsole.error(errors)
         logger.toFile.error(errors)
     }
@@ -41,6 +41,16 @@ export const getOneCandidate = async (req, res) => {
     } catch (errors) {
         logger.toConsole.error(errors)
         logger.toFile.error(errors)
-        res.status(400).send(errors.stack)
+        res.status(500).send(errors.stack)
     }
+}
+
+/**
+ * Callback function.
+ * Add one candidate from DB.
+ * @param {request} req
+ * @param {response} res
+ */
+export const addOneCandidate = async (req, res) => {
+    const query = PgQuery('')
 }

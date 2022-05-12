@@ -1,4 +1,4 @@
-import { PgQuery, execQuery } from './../../core/db/pgconnect.js'
+import { createQuery, execQuery } from './../../core/db/pgconnect.js'
 import { Candidate, factoryCandidate } from './candidate.js'
 
 /**
@@ -6,7 +6,7 @@ import { Candidate, factoryCandidate } from './candidate.js'
  * @returns {Promise<Candidate[]>}
  */
 export const selectAll = async () => {
-    const query = PgQuery('Get all candidates', 'SELECT * FROM candidate', [])
+    const query = createQuery('Get all candidates', 'SELECT * FROM candidate', [])
     const result = await execQuery(query)
     return result.rows.map((row) => factoryCandidate(row))
 }
@@ -17,7 +17,7 @@ export const selectAll = async () => {
  * @return {Promise<Candidate[]>}
  */
 export const selectOneById = async (id) => {
-    const query = PgQuery('Get one candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [req.params.id])
+    const query = createQuery('Get one candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [req.params.id])
     const result = await execQuery(query)
     return result.rows.map((row) => factoryCandidate(row))
 }
@@ -29,7 +29,7 @@ export const selectOneById = async (id) => {
  */
 export const insertCandidate = async (req) => {
     const candidate = factoryCandidate(req.params.id, req.body.firstname, req.body.surname)
-    const query = PgQuery('Add candidate', 'INSERT INTO candidate VALUES ($1,$2,$3)', [candidate.id, candidate.firstname, candidate.surname])
+    const query = createQuery('Add candidate', 'INSERT INTO candidate VALUES ($1,$2,$3)', [candidate.id, candidate.firstname, candidate.surname])
     await execQuery(query)
     return candidate
 }
@@ -41,7 +41,7 @@ export const insertCandidate = async (req) => {
  */
 export const updateCandidate = async (req) => {
     const candidate = factoryCandidate(req.params.id, req.body.firstname, req.body.surname)
-    const query = PgQuery('Update candidate', 'UPDATE candidate SET firstname = $1, surname = $2 WHERE id = $3', [
+    const query = createQuery('Update candidate', 'UPDATE candidate SET firstname = $1, surname = $2 WHERE id = $3', [
         candidate.firstname,
         candidate.surname,
         candidate.id,
@@ -56,7 +56,7 @@ export const updateCandidate = async (req) => {
  * @return {Promise<Candidate>}
  */
 export const delCandidate = async (req) => {
-    const query = PgQuery('Delete candidate', 'DELETE FROM candidate WHERE id = $1 RETURNING *', [req.params.id])
+    const query = createQuery('Delete candidate', 'DELETE FROM candidate WHERE id = $1 RETURNING *', [req.params.id])
     const result = await execQuery(query)
     return result.rows
 }

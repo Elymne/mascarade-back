@@ -1,7 +1,7 @@
 import express from 'express'
 import swaggerRoute from './swagger/swagger.js'
 import healthcheckRoute from './healthcheck/healthcheck.js'
-import candidateRoutes from '../../features/candidates/routes.js'
+import candidateRoutes from '../../features/candidates/candidateRoutes.js'
 
 const router = express.Router()
 

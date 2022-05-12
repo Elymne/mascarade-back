@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/', getCandidates)
 router.get('/:id', getCandidate)
 router.post('/', postCandidate)
-router.put('/:id', putCandidate)
+router.put('/', putCandidate)
 router.delete('/:id', deleteCandidate)
 router.get('/ordered', getAllCandidatesOrdered)
 

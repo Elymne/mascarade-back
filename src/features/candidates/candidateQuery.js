@@ -28,7 +28,7 @@ export const selectOneById = async (id) => {
  * @return {Promise<Candidate>}
  */
 export const insertCandidate = async (req) => {
-    const candidate = factoryCandidate(req.params.id, req.body.firstname, req.body.surname)
+    const candidate = factoryCandidate(req.body.id, req.body.firstname, req.body.surname)
     const query = createQuery('Add candidate', 'INSERT INTO candidate VALUES ($1,$2,$3)', [candidate.id, candidate.firstname, candidate.surname])
     await execQuery(query)
     return candidate
@@ -40,7 +40,7 @@ export const insertCandidate = async (req) => {
  * @return {Promise<Candidate>}
  */
 export const updateCandidate = async (req) => {
-    const candidate = factoryCandidate(req.params.id, req.body.firstname, req.body.surname)
+    const candidate = factoryCandidate(req.body.id, req.body.firstname, req.body.surname)
     const query = createQuery('Update candidate', 'UPDATE candidate SET firstname = $1, surname = $2 WHERE id = $3', [
         candidate.firstname,
         candidate.surname,

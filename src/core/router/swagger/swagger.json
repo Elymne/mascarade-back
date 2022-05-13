@@ -13,8 +13,8 @@
     "basePath": "/api/v1",
     "tags": [
         {
-            "name": "Users",
-            "description": "API for users in the system"
+            "name": "Candidates",
+            "description": "API for candidates in the server."
         }
     ],
     "schemes": [
@@ -30,16 +30,16 @@
         "/candidates": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Candidates"
                 ],
-                "description": "Create new user in system",
+                "description": "Create new candidate",
                 "parameters": [
                     {
-                        "name": "user",
+                        "name": "candidate",
                         "in": "body",
-                        "description": "User that we want to create",
+                        "description": "Candidate that we want to create",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 ],
@@ -48,9 +48,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "New user is created",
+                        "description": "New Candidate is created",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 }
@@ -77,7 +77,8 @@
                     "in": "path",
                     "required": true,
                     "description": "ID of candidate that we want to find",
-                    "type": "uuid"
+                    "type": "string",
+                    "format": "uuid"
                 }
             ],
             "get": {
@@ -89,45 +90,45 @@
                     "200": {
                         "description": "User is found",
                         "schema": {
-                            "$ref": "#/definitions/CandidateT"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 }
             },
             "delete": {
-                "summary": "Delete user with given ID",
+                "summary": "Delete candidate with given ID",
                 "tags": [
-                    "Users"
+                    "Candidates"
                 ],
                 "responses": {
                     "200": {
-                        "description": "User is deleted",
+                        "description": "Candidate is deleted",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 }
             },
             "put": {
-                "summary": "Update user with give ID",
+                "summary": "Update candidate with give ID",
                 "tags": [
-                    "Users"
+                    "Candidates"
                 ],
                 "parameters": [
                     {
-                        "name": "user",
+                        "name": "candidate",
                         "in": "body",
-                        "description": "User with new values of properties",
+                        "description": "Candidate with new values of properties",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "User is updated",
+                        "description": "Canddiate is updated",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/Candidate"
                         }
                     }
                 }
@@ -143,7 +144,8 @@
             ],
             "properties": {
                 "id": {
-                    "type": "UUID",
+                    "type": "string",
+                    "format": "uuid",
                     "uniqueItems": true
                 },
                 "firstname": {

@@ -2,12 +2,16 @@ import express from 'express'
 import router from './core/router/router.js'
 import cors from './core/cors/cors.js'
 import { logger } from './core/log/logger.js'
+import bodyParser from 'body-parser'
 
 // Set express app.
 const app = express()
 
+// Json parser.
+app.use(bodyParser.json())
+
 // Set cors.
-app.use(cors)
+app.use(cors())
 
 // Set router.
 app.use('/api/v1', router)

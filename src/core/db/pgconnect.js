@@ -3,13 +3,21 @@ const { Pool } = postgresqlConnect
 const pool = new Pool()
 
 /**
- * Create and return a query body.
+ * @typedef {Object} PgQuery
+ * @property {string} name
+ * @property {string} text
+ * @property {Array<string|int>} value
+ */
+export const PgQuery = Object
+
+/**
+ * Prepare a query statement.
  * @param {string} name
  * @param {string} text
- * @param {Array<string|int>} values
- * @constructor - I cheat here. Want to have Struct like in C programming for example.
+ * @param {Array<string|int>} value
+ * @return {PgQuery}
  */
-export const PgQuery = (name, text, values) => {
+export const createQuery = (name, text, values) => {
     return {
         name: name,
         text: text,

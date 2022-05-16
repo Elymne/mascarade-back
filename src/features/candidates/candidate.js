@@ -8,11 +8,9 @@ export const Candidate = Object
 
 /**
  * Parse Candidate object from sql result.
- * @param {uuidv4} queryResult
- * @param {string} queryResult
- * @param {string} queryResult
+ * @param {JSON} queryResult
  * @return {Candidate} Parsed Candidate.
  */
-export const factoryCandidate = (id, firstname, surname) => {
-    return { id: id, firstname: firstname, surname: surname }
+export const factoryCandidate = (queryResult) => {
+    return { id: queryResult.id, firstname: queryResult.firstname, surname: queryResult.surname }
 }

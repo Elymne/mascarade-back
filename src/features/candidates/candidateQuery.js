@@ -5,7 +5,7 @@ import { Candidate, factoryCandidate } from './candidate.js'
  * Select all candidates from DB.
  * @returns {Promise<Candidate[]>}
  */
-export const selectAll = async () => {
+export const selectAllCandidates = async () => {
     const query = createQuery('Get all candidates', 'SELECT * FROM candidate', [])
     const result = await execQuery(query)
     return result.rows.map((row) => factoryCandidate(row))
@@ -16,7 +16,7 @@ export const selectAll = async () => {
  * @param {Request} req
  * @return {Promise<Candidate[]>}
  */
-export const selectOneById = async (id) => {
+export const selectOneCandidateById = async (id) => {
     const query = createQuery('Get one candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [req.params.id])
     const result = await execQuery(query)
     return result.rows.map((row) => factoryCandidate(row))
@@ -28,7 +28,7 @@ export const selectOneById = async (id) => {
  * @return {Promise<Candidate>}
  */
 export const insertCandidate = async (req) => {
-    const candidate = factoryCandidate(req.body.id, req.body.firstname, req.body.surname)
+    const candidate = factoryCandidate({ id: req.body.id, firstname: req.body.firstname, surname: req.body.surname })
     const query = createQuery('Add candidate', 'INSERT INTO candidate VALUES ($1,$2,$3)', [candidate.id, candidate.firstname, candidate.surname])
     await execQuery(query)
     return candidate
@@ -40,7 +40,7 @@ export const insertCandidate = async (req) => {
  * @return {Promise<Candidate>}
  */
 export const updateCandidate = async (req) => {
-    const candidate = factoryCandidate(req.body.id, req.body.firstname, req.body.surname)
+    const candidate = factoryCandidate({ id: req.body.id, firstname: req.body.firstname, surname: req.body.surname })
     const query = createQuery('Update candidate', 'UPDATE candidate SET firstname = $1, surname = $2 WHERE id = $3', [
         candidate.firstname,
         candidate.surname,

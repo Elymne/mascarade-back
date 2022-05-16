@@ -1,5 +1,5 @@
 import { logger } from '../../core/log/logger.js'
-import { delCandidate, insertCandidate, selectAll, selectOneById, updateCandidate } from './candidateQuery.js'
+import { delCandidate, insertCandidate, selectAllCandidates, selectOneCandidateById, updateCandidate } from './candidateQuery.js'
 
 /**
  * Callback function.
@@ -8,7 +8,7 @@ import { delCandidate, insertCandidate, selectAll, selectOneById, updateCandidat
  */
 export const getCandidates = async (req, res) => {
     try {
-        res.status(200).json(await selectAll())
+        res.status(200).json(await selectAllCandidates())
     } catch (errors) {
         res.status(500).send(errors)
         logger.toConsole.error(errors)
@@ -23,7 +23,7 @@ export const getCandidates = async (req, res) => {
  */
 export const getCandidate = async (req, res) => {
     try {
-        const result = await selectOneById(req.params.id)
+        const result = await selectOneCandidateById(req.params.id)
         if (!result.rows.length) {
             logger.toConsole.info(`A candidate with id [${req.params.id}] was queried but does not exists`)
             logger.toFile.info(`A candidate with id [${req.params.id}] was queried but does not exists`)

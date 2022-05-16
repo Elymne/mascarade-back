@@ -3,6 +3,7 @@ import router from './core/router/router.js'
 import cors from './core/cors/cors.js'
 import { logger } from './core/log/logger.js'
 import bodyParser from 'body-parser'
+import helmet from 'helmet'
 
 // Set express app.
 const app = express()
@@ -12,6 +13,9 @@ app.use(bodyParser.json())
 
 // Set cors.
 app.use(cors())
+
+// Use Helmet.
+app.use(helmet())
 
 // Set router.
 app.use('/api/v1', router)

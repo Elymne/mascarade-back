@@ -1,5 +1,6 @@
 import { createQuery, execQuery } from './../../core/db/pgconnect.js'
-import { Candidate, factoryCandidate } from './candidate.js'
+import { Candidate } from './candidate.js'
+import { v4 as uuid } from 'uuid'
 
 /**
  * Select all candidates from DB.
@@ -8,27 +9,27 @@ import { Candidate, factoryCandidate } from './candidate.js'
 export const selectAllCandidates = async () => {
     const query = createQuery('Get all candidates', 'SELECT * FROM candidate', [])
     const result = await execQuery(query)
-    return result.rows.map((row) => factoryCandidate(row))
+    return result.rows
 }
 
 /**
  * Select a unique candidate from DB.
- * @param {Request} req
- * @return {Promise<Candidate[]>}
+ * @param {uuid} id
+ * @return {Promise<Candidate>|Promise<null>}
  */
 export const selectOneCandidateById = async (id) => {
-    const query = createQuery('Get one candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [req.params.id])
+    const query = createQuery('Get one candidates', 'SELECT * FROM candidate WHERE candidate.id = $1', [id])
     const result = await execQuery(query)
-    return result.rows.map((row) => factoryCandidate(row))
+    if (result.rows.lenght != 0) return result.rows[0]
+    return null
 }
 
 /**
  * Insert a candidate into DB.
- * @param {Request} req
+ * @param {Candidate} candidate
  * @return {Promise<Candidate>}
  */
-export const insertCandidate = async (req) => {
-    const candidate = factoryCandidate({ id: req.body.id, firstname: req.body.firstname, surname: req.body.surname })
+export const insertCandidate = async (candidate) => {
     const query = createQuery('Add candidate', 'INSERT INTO candidate VALUES ($1,$2,$3)', [candidate.id, candidate.firstname, candidate.surname])
     await execQuery(query)
     return candidate
@@ -39,8 +40,7 @@ export const insertCandidate = async (req) => {
  * @param {Request} req
  * @return {Promise<Candidate>}
  */
-export const updateCandidate = async (req) => {
-    const candidate = factoryCandidate({ id: req.body.id, firstname: req.body.firstname, surname: req.body.surname })
+export const updateCandidate = async (candidate) => {
     const query = createQuery('Update candidate', 'UPDATE candidate SET firstname = $1, surname = $2 WHERE id = $3', [
         candidate.firstname,
         candidate.surname,

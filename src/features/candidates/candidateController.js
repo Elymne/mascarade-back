@@ -1,4 +1,5 @@
 import { logger } from '../../core/log/logger.js'
+import { Candidate } from './candidate.js'
 import { delCandidate, insertCandidate, selectAllCandidates, selectOneCandidateById, updateCandidate } from './candidateQuery.js'
 
 /**
@@ -24,13 +25,13 @@ export const getCandidates = async (req, res) => {
 export const getCandidate = async (req, res) => {
     try {
         const result = await selectOneCandidateById(req.params.id)
-        if (!result.rows.length) {
+        if (!result) {
             logger.toConsole.info(`A candidate with id [${req.params.id}] was queried but does not exists`)
             logger.toFile.info(`A candidate with id [${req.params.id}] was queried but does not exists`)
             res.status(404).send('Candidate not found with this id.')
             return
         }
-        res.status(200).json(result[0])
+        res.status(200).json(result)
     } catch (errors) {
         logger.toConsole.error(errors)
         logger.toFile.error(errors)
@@ -45,7 +46,7 @@ export const getCandidate = async (req, res) => {
  */
 export const postCandidate = async (req, res) => {
     try {
-        const result = await insertCandidate(req)
+        const result = await insertCandidate({ id: uuid(), firstname: req.body.firstname, surname: req.body.surname })
         res.status(201).json(result)
     } catch (errors) {
         logger.toConsole.error(errors)
@@ -61,7 +62,7 @@ export const postCandidate = async (req, res) => {
  */
 export const putCandidate = async (req, res) => {
     try {
-        const result = await updateCandidate(req)
+        const result = await updateCandidate({ id: req.body.id, firstname: req.body.firstname, surname: req.body.surname })
         res.status(200).json(result)
     } catch (errors) {
         logger.toConsole.error(errors)

@@ -37,7 +37,7 @@ export const insertCandidate = async (candidate) => {
 
 /**
  * Update a candidate from DB.
- * @param {Request} req
+ * @param {Candidate} candidate
  * @return {Promise<Candidate>}
  */
 export const updateCandidate = async (candidate) => {
@@ -52,11 +52,11 @@ export const updateCandidate = async (candidate) => {
 
 /**
  * Delete a candidate from DB.
- * @param {Request} req
+ * @param {uuid} id
  * @return {Promise<Candidate>}
  */
-export const delCandidate = async (req) => {
-    const query = createQuery('Delete candidate', 'DELETE FROM candidate WHERE id = $1 RETURNING *', [req.params.id])
+export const delCandidate = async (id) => {
+    const query = createQuery('Delete candidate', 'DELETE FROM candidate WHERE id = $1 RETURNING *', [id])
     const result = await execQuery(query)
     return result.rows
 }

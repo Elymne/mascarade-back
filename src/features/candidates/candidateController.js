@@ -1,5 +1,4 @@
 import { logger } from '../../core/log/logger.js'
-import { Candidate } from './candidate.js'
 import { delCandidate, insertCandidate, selectAllCandidates, selectOneCandidateById, updateCandidate } from './candidateQuery.js'
 
 /**
@@ -78,7 +77,7 @@ export const putCandidate = async (req, res) => {
  */
 export const deleteCandidate = async (req, res) => {
     try {
-        const result = await delCandidate(req)
+        const result = await delCandidate(req.params.id)
         res.status(200).json(result)
     } catch (errors) {
         logger.toConsole.error(errors)
